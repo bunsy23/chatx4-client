@@ -19,6 +19,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('./tailwindcss-scrollbar-hide.cjs')
+    require("./tailwindcss-scrollbar-hide.cjs"),
   ],
 };

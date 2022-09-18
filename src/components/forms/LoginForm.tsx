@@ -2,9 +2,12 @@ import { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserCredentialsParams } from "../../utils/types";
+import { postLoginUser } from "../../utils/api";
 
 export const LoginForm = () => {
+  const navigate = useNavigate();
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
 
   const toggleShowPassword = () => {
@@ -23,8 +26,13 @@ export const LoginForm = () => {
     password: Yup.string().required("Password is required"),
   });
 
-  const handleOnSubmit = (values: any) => {
-    alert(JSON.stringify(values, null, 2));
+  const handleOnSubmit = async (data: UserCredentialsParams) => {
+    try {
+      const response = await postLoginUser(data);
+      if (response) navigate("/conversations");
+    } catch (err) {
+      console.log("LoginForm handleOnSubmit", err);
+    }
   };
 
   return (
@@ -37,7 +45,7 @@ export const LoginForm = () => {
           onSubmit={handleOnSubmit}
         >
           <Form className="flex flex-col gap-y-2">
-            <div className=" flex w-full cursor-pointer flex-col rounded-xl bg-[#131313] p-2">
+            <div className="flex w-full cursor-pointer flex-col rounded-xl bg-inputBackground p-2">
               <label htmlFor="email" className="text-white">
                 Email
               </label>
@@ -45,7 +53,7 @@ export const LoginForm = () => {
                 id="email"
                 name="email"
                 type="text"
-                className="bg-[#131313] text-white outline-none"
+                className="bg-inputBackground text-white outline-none"
               />
               <div className="text-xs text-red-500">
                 <ErrorMessage name="email" />
@@ -91,7 +99,10 @@ export const LoginForm = () => {
               </div>
             </div>
 
-            <button className="w-full select-none rounded-xl bg-primary py-2 text-white">
+            <button
+              type="submit"
+              className="w-full select-none rounded-xl bg-primary py-2 text-white"
+            >
               Login
             </button>
           </Form>

@@ -4,6 +4,8 @@ import * as Yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { postRegisterUser } from "../../utils/api";
+import { CreateUserParams } from "../../utils/types";
 
 export const RegisterForm = () => {
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
@@ -28,8 +30,12 @@ export const RegisterForm = () => {
     password: Yup.string().required("Password is required"),
   });
 
-  const handleOnSubmit = (values: any) => {
-    alert(JSON.stringify(values, null, 2));
+  const handleOnSubmit = async (data: CreateUserParams) => {
+    try {
+      await postRegisterUser(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -42,7 +48,7 @@ export const RegisterForm = () => {
           onSubmit={handleOnSubmit}
         >
           <Form className="flex flex-col gap-y-2">
-            <div className=" flex w-full cursor-pointer flex-col rounded-xl bg-[#131313] p-2">
+            <div className="flex w-full cursor-pointer flex-col rounded-xl bg-[#131313] p-2">
               <label htmlFor="email" className="text-white">
                 Email
               </label>
@@ -50,7 +56,7 @@ export const RegisterForm = () => {
                 id="email"
                 name="email"
                 type="text"
-                className="bg-[#131313] text-white outline-none"
+                className="bg-inputBackground text-white outline-none"
               />
               <div className="text-xs text-red-500">
                 <ErrorMessage name="email" />
@@ -66,7 +72,7 @@ export const RegisterForm = () => {
                   id="firstName"
                   name="firstName"
                   type="text"
-                  className="bg-[#131313] text-white outline-none"
+                  className="bg-inputBackground text-white outline-none"
                 />
                 <div className="text-xs text-red-500">
                   <ErrorMessage name="firstName" />
