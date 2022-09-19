@@ -1,22 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getAuthUser } from "../api";
-import { User } from "../types";
+import { AuthContext } from "../context/AuthContext";
 
 export const useAuth = () => {
-  const [user, setUser] = useState<User | undefined>();
   const [loading, setLoading] = useState<boolean>(true);
+  const { user, updateAuthUser } = useContext(AuthContext);
   const controller = new AbortController();
 
   useEffect(() => {
     getAuthUser()
       .then(({ data }) => {
-        setUser(data);
-        // setLoading(false);
+        updateAuthUser(data);
         setTimeout(() => setLoading(false), 1000);
       })
       .catch((err) => {
         console.log(err);
-        // setLoading(false);
         setTimeout(() => setLoading(false), 1000);
       });
 
