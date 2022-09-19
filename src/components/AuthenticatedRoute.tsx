@@ -10,11 +10,13 @@ export const AuthenticatedRoute = ({
   const location = useLocation();
   const { user, loading } = useAuth();
 
-  if (loading) return <div>loading...</div>;
-
-  if (!loading && !user) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+  if (loading) {
+    return <div>loading...</div>;
+  } else {
+    if (!user) {
+      return <Navigate to="/login" state={{ from: location }} replace />;
+    } else {
+      return <div>{children}</div>;
+    }
   }
-
-  if (!loading && user) return <>{children}</>;
 };
