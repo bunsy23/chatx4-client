@@ -5,12 +5,12 @@ import MOCK_CONVERSATIONS from "../__mocks__/conversations";
 export const ConversationPage = () => {
   return (
     <div className="flex h-screen">
-      <div className="max-w-xs overflow-y-scroll scrollbar-hide">
-        <ConversationSidebar conversations={MOCK_CONVERSATIONS} />
+      <div className="w-80 max-w-xs overflow-y-scroll scrollbar-hide">
+        <div className="h-full border-r-2 border-r-gray-100">
+          <ConversationSidebar conversations={[]} />
+        </div>
       </div>
-      <div>
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   );
 };
