@@ -1,4 +1,10 @@
-import { CreateUserParams, User, UserCredentialsParams } from "./types";
+import {
+  ConversationType,
+  CreateUserParams,
+  MessageType,
+  User,
+  UserCredentialsParams,
+} from "./types";
 import axios, { AxiosRequestConfig } from "axios";
 
 let VITE_API_URL = "";
@@ -20,3 +26,12 @@ export const postLoginUser = (data: UserCredentialsParams) => {
 
 export const getAuthUser = () =>
   axios.get<User>(`${VITE_API_URL}/auth/status`, config);
+
+export const getConversations = () =>
+  axios.get<ConversationType[]>(`${VITE_API_URL}/conversations`, config);
+
+export const getConversationMessages = (conversationId: number) =>
+  axios.get<MessageType[]>(
+    `${VITE_API_URL}/messages/${conversationId}`,
+    config
+  );

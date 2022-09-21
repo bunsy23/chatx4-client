@@ -18,23 +18,16 @@ function App() {
           <Route index element={<Navigate to="/conversations" />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="login" element={<LoginPage />} />
-          <Route path="conversations" element={<ConversationPage />}>
-            <Route
-              index
-              element={
-                <AuthenticatedRoute>
-                  <ConversationPanelPage />
-                </AuthenticatedRoute>
-              }
-            />
-            <Route
-              path=":id"
-              element={
-                <AuthenticatedRoute>
-                  <ConversationChannelPage />
-                </AuthenticatedRoute>
-              }
-            />
+          <Route
+            path="conversations"
+            element={
+              <AuthenticatedRoute>
+                <ConversationPage />
+              </AuthenticatedRoute>
+            }
+          >
+            <Route index element={<ConversationPanelPage />} />
+            <Route path=":id" element={<ConversationChannelPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

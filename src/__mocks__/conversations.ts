@@ -1,6 +1,4 @@
-import { Conversation } from "../utils/types";
-
-const MOCK_CONVERSATIONS: Conversation[] = [
+const MOCK_CONVERSATIONS: any = [
   { id: "1", name: "Dara 01", lastMessage: "Hi!" },
   { id: "2", name: "Dara 02", lastMessage: "How are you to day?" },
   { id: "3", name: "Dara 03", lastMessage: "We will go at 9:00am then." },
