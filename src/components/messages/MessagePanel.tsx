@@ -9,31 +9,48 @@ type MessagePanelProps = {
 };
 export const MessagePanel = ({ messages, height }: MessagePanelProps) => {
   const formattedMessages = () => {
+    let isFirst = true;
+
     return messages.map((message, index, arr) => {
-      const currentMsg = arr[index];
-      const nextMsg = arr[index + 1];
+      const currentMsg = messages[index];
+      const nextMsg = messages[index + 1];
+      console.log(index, { currentMsg, nextMsg });
 
-      if (arr.length === index + 1) {
+      if (!nextMsg) {
+        console.log("last item");
+
         return (
-          <MessageItem key={message.id} message={message} sameAuthor={false} />
+          <MessageItem key={message.id} message={message} showAvatar={false} />
         );
       }
 
-      if (currentMsg.author.id === nextMsg.author.id) {
+      if (currentMsg.author.id === nextMsg.author.id && isFirst === true) {
+        console.log(index, "should show avatar");
+
+        isFirst = false;
         return (
-          <MessageItem key={message.id} message={message} sameAuthor={true} />
+          <MessageItem key={message.id} message={message} showAvatar={true} />
         );
       }
 
-      return (
-        <MessageItem key={message.id} message={message} sameAuthor={false} />
-      );
+      if (currentMsg.author.id === nextMsg.author.id && isFirst === false) {
+        return (
+          <MessageItem key={message.id} message={message} showAvatar={false} />
+        );
+      }
+
+      if (currentMsg.author.id !== nextMsg.author.id) {
+        isFirst = true;
+        return (
+          <MessageItem key={message.id} message={message} showAvatar={false} />
+        );
+      }
     });
   };
 
   useEffect(() => {
     formattedMessages();
-  });
+  }, []);
 
   return (
     <div className={`${height}`}>

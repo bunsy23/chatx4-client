@@ -6,10 +6,10 @@ import { MessageAvatar } from "./MessageAvatar";
 
 type MessageItemProps = {
   message: MessageType;
-  sameAuthor: boolean;
+  showAvatar: boolean;
 };
 
-export const MessageItem = ({ message, sameAuthor }: MessageItemProps) => {
+export const MessageItem = ({ message, showAvatar }: MessageItemProps) => {
   const { user } = useContext(AuthContext);
 
   const isUserMessage = user?.id === message.author.id;
@@ -19,12 +19,12 @@ export const MessageItem = ({ message, sameAuthor }: MessageItemProps) => {
 
   return (
     <div
-      className={`flex items-center gap-x-2 px-4 py-2 ${
-        isUserMessage ? "self-end" : ""
-      }`}
+      className={`flex items-center gap-x-2 px-4 ${
+        showAvatar ? "py-2 pt-[0.1rem]" : "py-[0.1rem]"
+      } ${isUserMessage ? "self-end" : ""}`}
     >
       {!isUserMessage ? (
-        !sameAuthor ? (
+        !showAvatar ? (
           <MessageAvatar color="bg-none" />
         ) : (
           <MessageAvatar color="bg-green-500" />
@@ -32,17 +32,17 @@ export const MessageItem = ({ message, sameAuthor }: MessageItemProps) => {
       ) : null}
 
       <div
-        className={`flex flex-col rounded-2xl border border-black/20 px-8 py-2 ${
+        className={`flex max-w-sm flex-col rounded-2xl border border-black/20 px-8 py-2 ${
           isUserMessage
-            ? !sameAuthor
+            ? !showAvatar
               ? "rounded-br-lg"
               : "rounded-tr-lg"
-            : !sameAuthor
+            : !showAvatar
             ? "rounded-bl-lg"
             : "rounded-tl-lg"
         }`}
       >
-        <div className="flex justify-end">
+        <div className={`flex ${isUserMessage ? "justify-end" : null}`}>
           <div className="flex items-center gap-x-4">
             <span className="font-semibold">{`${message.author.firstName} ${message.author.lastName}`}</span>
             <span className="text-xs font-semibold text-gray-700">
