@@ -50,7 +50,7 @@ export const MessageItem = ({ message, showAvatar }: MessageItemProps) => {
             </span>
           </div>
         </div>
-        <div className="text-sm">{message.content}</div>
+        <div className="break-words text-sm">{message.content}</div>
       </div>
     </div>
   );
