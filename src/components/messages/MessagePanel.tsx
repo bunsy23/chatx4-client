@@ -7,6 +7,7 @@ type MessagePanelProps = {
   messages: MessageType[];
   height: string;
 };
+
 export const MessagePanel = ({ messages, height }: MessagePanelProps) => {
   const formattedMessages = () => {
     let isFirst = true;
@@ -14,19 +15,14 @@ export const MessagePanel = ({ messages, height }: MessagePanelProps) => {
     return messages.map((message, index, arr) => {
       const currentMsg = messages[index];
       const nextMsg = messages[index + 1];
-      console.log(index, { currentMsg, nextMsg });
 
       if (!nextMsg) {
-        console.log("last item");
-
         return (
           <MessageItem key={message.id} message={message} showAvatar={false} />
         );
       }
 
       if (currentMsg.author.id === nextMsg.author.id && isFirst === true) {
-        console.log(index, "should show avatar");
-
         isFirst = false;
         return (
           <MessageItem key={message.id} message={message} showAvatar={true} />
@@ -36,6 +32,12 @@ export const MessagePanel = ({ messages, height }: MessagePanelProps) => {
       if (currentMsg.author.id === nextMsg.author.id && isFirst === false) {
         return (
           <MessageItem key={message.id} message={message} showAvatar={false} />
+        );
+      }
+
+      if (currentMsg.author.id !== nextMsg.author.id && isFirst === true) {
+        return (
+          <MessageItem key={message.id} message={message} showAvatar={true} />
         );
       }
 
