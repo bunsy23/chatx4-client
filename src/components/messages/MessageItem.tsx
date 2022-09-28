@@ -44,13 +44,13 @@ export const MessageItem = ({ message, showAvatar }: MessageItemProps) => {
       >
         <div className={`flex ${isUserMessage ? "justify-end" : null}`}>
           <div className="flex items-center gap-x-4">
-            <span className="font-semibold">{`${message.author.firstName} ${message.author.lastName}`}</span>
+            <span className="text-sm font-semibold">{`${message.author.firstName} ${message.author.lastName}`}</span>
             <span className="text-xs font-semibold text-gray-700">
               {displayMessageDate}
             </span>
           </div>
         </div>
-        <div>{message.content}</div>
+        <div className="text-sm">{message.content}</div>
       </div>
     </div>
   );

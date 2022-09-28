@@ -2,6 +2,9 @@ import React, { Dispatch } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { IoCloseOutline } from "react-icons/io5";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+import { addConversation } from "../../store/conversationSlice";
 
 type CreateConversationFormProps = {
   setShowModal: Dispatch<React.SetStateAction<boolean>>;
@@ -10,6 +13,7 @@ type CreateConversationFormProps = {
 export const CreateConversationForm = ({
   setShowModal,
 }: CreateConversationFormProps) => {
+  const dispatch = useDispatch<AppDispatch>();
   const createConversationInitialValue = { recipient: "", message: "" };
 
   const createConversationValidationSchema = Yup.object({
@@ -18,7 +22,24 @@ export const CreateConversationForm = ({
   });
 
   const handleOnSubmit = (data: any) => {
-    alert(JSON.stringify(data));
+    dispatch(
+      addConversation({
+        id: 6,
+        createdAt: "",
+        creator: {
+          id: 6,
+          email: "",
+          firstName: "",
+          lastName: "",
+        },
+        recipient: {
+          id: 6,
+          email: "",
+          firstName: "",
+          lastName: "",
+        },
+      })
+    );
   };
 
   const handleCloseButtonClick = () => {
