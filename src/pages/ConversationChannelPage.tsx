@@ -1,24 +1,23 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getConversationMessages } from "../utils/api";
-import { MessageEventPayload, MessageType } from "../utils/types";
+import { MessageEventPayload } from "../utils/types";
 
 import { MessagePanel } from "../components/messages/MessagePanel";
 import { MessagePanelHeader } from "../components/messages/MessagePanelHeader";
 import { SocketContext } from "../utils/context/SocketContext";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store";
+import { fetchMessagesThunk, setMessages } from "../store/messageSlice";
 
 export const ConversationChannelPage = () => {
   const { id } = useParams();
   const socket = useContext(SocketContext);
-  const [messages, setMessages] = useState<MessageType[]>([]);
+  const { messages } = useSelector((state: RootState) => state.message);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     const conversationId = parseInt(id!);
-    getConversationMessages(conversationId)
-      .then((data) => {
-        setMessages(data.data);
-      })
-      .catch((err) => console.log(err));
+    dispatch(fetchMessagesThunk(conversationId));
   }, [id]);
 
   useEffect(() => {
@@ -28,7 +27,7 @@ export const ConversationChannelPage = () => {
     socket.on("onMessage", (payload: MessageEventPayload) => {
       console.log({ payload });
       const { conversation, ...message } = payload;
-      setMessages((prev) => [message, ...prev]);
+      dispatch(setMessages(message));
     });
 
     return () => {

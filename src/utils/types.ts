@@ -21,7 +21,6 @@ export type ConversationType = {
   id: number;
   creator: User;
   recipient: User;
-  // createdAt: Date;
   createdAt: string;
 };
 
@@ -45,10 +44,8 @@ export type CreateMessageParams = {
   content: string;
 };
 
-// export type CreateConversationParams = {
-//   recipient: string;
-// };
-
 export type MessageContentParam = {
   content: string;
 };
+
+export type ConversationMessage = { id: number; messages: MessageType[] };

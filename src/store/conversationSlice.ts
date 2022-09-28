@@ -35,8 +35,8 @@ export const conversationsSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchConversationsThunk.fulfilled, (state, action) => {
-        state.loading = false;
         state.conversations = action.payload.data;
+        state.loading = false;
       })
       .addCase(fetchConversationsThunk.rejected, (state) => {
         state.loading = false;
