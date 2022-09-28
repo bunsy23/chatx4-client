@@ -15,9 +15,9 @@ export const ConversationPage = () => {
   }, []);
 
   return (
-    <div className="flex h-screen">
-      <div className="w-80 overflow-y-scroll scrollbar-hide">
-        <div className="h-full border-r-[1px] border-black/50">
+    <div className="flex">
+      <div className="w-80">
+        <div className="overflow-y-scroll border-r-[1px] border-black/50 scrollbar-hide">
           <ConversationSidebar conversations={conversations} />
         </div>
       </div>

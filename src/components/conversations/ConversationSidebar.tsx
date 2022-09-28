@@ -17,8 +17,8 @@ export const ConversationSidebar = ({ conversations }: Props) => {
   return (
     <>
       {showModal && <CreateConversationModal setShowModal={setShowModal} />}
-      <aside className="w-full border-black">
-        <header className="sticky top-0 left-0 flex h-16 w-full items-center justify-between border-b-[1px] bg-white p-4">
+      <aside className="h-screen w-full border-black">
+        <header className="sticky top-0 left-0 flex h-[6%] w-full items-center justify-between border-b-[1px] bg-white p-4">
           <span className="text-md font-bold">Conversations</span>
           <IoCreateOutline
             size={24}
@@ -26,7 +26,7 @@ export const ConversationSidebar = ({ conversations }: Props) => {
             className="hover:cursor-pointer"
           />
         </header>
-        <div className="">
+        <section>
           <div className="flex flex-col divide-y border-b-[1px]">
             {conversations.map((conversation) => (
               <div
@@ -46,7 +46,7 @@ export const ConversationSidebar = ({ conversations }: Props) => {
               </div>
             ))}
           </div>
-        </div>
+        </section>
       </aside>
     </>
   );
