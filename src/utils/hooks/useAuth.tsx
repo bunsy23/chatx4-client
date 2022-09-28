@@ -11,11 +11,13 @@ export const useAuth = () => {
     getAuthUser()
       .then(({ data }) => {
         updateAuthUser(data);
-        setTimeout(() => setLoading(false), 1000);
+        // setTimeout(() => setLoading(false), 1000);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
-        setTimeout(() => setLoading(false), 1000);
+        // setTimeout(() => setLoading(false), 1000);
+        setLoading(false);
       });
 
     return () => {
