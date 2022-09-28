@@ -1,5 +1,6 @@
 import {
   ConversationType,
+  CreateMessageParams,
   CreateUserParams,
   MessageType,
   User,
@@ -35,3 +36,6 @@ export const getConversationMessages = (conversationId: number) =>
     `${VITE_API_URL}/messages/${conversationId}`,
     config
   );
+
+export const postNewMessage = (data: CreateMessageParams) =>
+  axios.post(`${VITE_API_URL}/messages`, data, config);

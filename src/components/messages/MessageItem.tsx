@@ -19,7 +19,7 @@ export const MessageItem = ({ message, showAvatar }: MessageItemProps) => {
 
   return (
     <div
-      className={`flex items-center gap-x-2 px-4 ${
+      className={`flex items-center  gap-x-2 px-4 ${
         showAvatar ? "py-2 pt-[0.1rem]" : "py-[0.1rem]"
       } ${isUserMessage ? "self-end" : ""}`}
     >

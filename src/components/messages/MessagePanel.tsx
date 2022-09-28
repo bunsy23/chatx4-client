@@ -1,14 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { MessageType } from "../../utils/types";
 import { MessageInputField } from "./MessageInputField";
 import { MessageItem } from "./MessageItem";
 
 type MessagePanelProps = {
   messages: MessageType[];
-  height: string;
 };
 
-export const MessagePanel = ({ messages, height }: MessagePanelProps) => {
+export const MessagePanel = ({ messages }: MessagePanelProps) => {
+  const { id: conversationId } = useParams();
+
   const formattedMessages = () => {
     let isFirst = true;
 
@@ -55,13 +57,13 @@ export const MessagePanel = ({ messages, height }: MessagePanelProps) => {
   }, []);
 
   return (
-    <div className={`${height}`}>
+    <>
       <div className="flex h-[93%] flex-col-reverse overflow-y-scroll">
         {formattedMessages()}
       </div>
       <div className="flex h-[7%] flex-none items-center border-t-[1px] border-black/50">
-        <MessageInputField />
+        <MessageInputField conversationId={conversationId} />
       </div>
-    </div>
+    </>
   );
 };

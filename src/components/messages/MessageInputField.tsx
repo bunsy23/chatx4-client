@@ -1,16 +1,42 @@
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+import { postNewMessage } from "../../utils/api";
+import { MessageContentParam } from "../../utils/types";
 
-export const MessageInputField = () => {
+type MessageInputFieldProps = {
+  // message: string;
+  // setMessage: Dispatch<SetStateAction<string>>;
+  conversationId: string | undefined;
+};
+
+export const MessageInputField = ({
+  conversationId,
+}: MessageInputFieldProps) => {
   const messageInitialValue = { content: "" };
 
   const messageValidationSchema = Yup.object({
     content: Yup.string().required("Message is empty"),
   });
 
-  const handleOnMessageSubmit = (data: any) => {
-    alert(JSON.stringify(data));
+  const handleOnMessageSubmit = async (
+    data: MessageContentParam,
+    { resetForm }: any
+  ) => {
+    try {
+      if (conversationId) {
+        await postNewMessage({
+          conversationId: parseInt(conversationId),
+          content: data.content,
+        });
+
+        resetForm();
+      }
+    } catch (err) {
+      console.log({ err });
+    }
   };
+
+  const handleMessageReset = () => {};
 
   return (
     <Formik
@@ -28,6 +54,7 @@ export const MessageInputField = () => {
         />
         <button
           type="submit"
+          onClick={handleMessageReset}
           className="mx-10 w-20 flex-none rounded-lg bg-black text-white"
         >
           Send
