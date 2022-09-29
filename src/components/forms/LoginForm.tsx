@@ -53,7 +53,7 @@ export const LoginForm = () => {
                 id="email"
                 name="email"
                 type="text"
-                className="bg-inputBackground text-white outline-none"
+                className="rounded-md  bg-inputBackground text-white outline-none"
               />
               <div className="text-xs text-red-500">
                 <ErrorMessage name="email" />
@@ -70,7 +70,7 @@ export const LoginForm = () => {
                     id="password"
                     name="password"
                     type={isPasswordShown ? "text" : "password"}
-                    className="bg-inputBackground text-white outline-none"
+                    className="rounded-md bg-inputBackground text-white outline-none"
                   />
 
                   <div className="text-xs text-red-500">

@@ -70,7 +70,7 @@ export const CreateConversationForm = ({
               id="recipient"
               name="recipient"
               type="text"
-              className="outline-none"
+              className="rounded-md outline-none"
             />
             <div className="text-xs text-red-500">
               <ErrorMessage name="recipient" />
@@ -86,7 +86,7 @@ export const CreateConversationForm = ({
               type="text"
               as="textarea"
               rows={5}
-              className="resize-none outline-none"
+              className="resize-none rounded-md outline-none"
             />
           </div>
 

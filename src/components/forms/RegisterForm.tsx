@@ -56,7 +56,7 @@ export const RegisterForm = () => {
                 id="email"
                 name="email"
                 type="text"
-                className="bg-inputBackground text-white outline-none"
+                className="rounded-md bg-inputBackground text-white outline-none"
               />
               <div className="text-xs text-red-500">
                 <ErrorMessage name="email" />
@@ -72,7 +72,7 @@ export const RegisterForm = () => {
                   id="firstName"
                   name="firstName"
                   type="text"
-                  className="bg-inputBackground text-white outline-none"
+                  className="rounded-md bg-inputBackground text-white outline-none"
                 />
                 <div className="text-xs text-red-500">
                   <ErrorMessage name="firstName" />
@@ -87,7 +87,7 @@ export const RegisterForm = () => {
                   id="lastName"
                   name="lastName"
                   type="text"
-                  className="bg-inputBackground text-white outline-none"
+                  className="rounded-md bg-inputBackground text-white outline-none"
                 />
                 <div className="text-xs text-red-500">
                   <ErrorMessage name="lastName" />
@@ -105,7 +105,7 @@ export const RegisterForm = () => {
                     id="password"
                     name="password"
                     type={isPasswordShown ? "text" : "password"}
-                    className="bg-inputBackground text-white outline-none"
+                    className="rounded-md bg-inputBackground text-white outline-none"
                   />
 
                   <div className="text-xs text-red-500">

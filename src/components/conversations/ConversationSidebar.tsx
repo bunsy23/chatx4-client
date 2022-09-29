@@ -36,7 +36,7 @@ export const ConversationSidebar = ({ conversations }: Props) => {
               {conversations.map((conversation) => (
                 <div
                   key={conversation.id}
-                  className="flex items-center gap-x-2 p-4 hover:cursor-pointer"
+                  className="flex items-center gap-x-2 p-4 hover:cursor-pointer hover:bg-slate-100"
                   onClick={() => navigate(`/conversations/${conversation.id}`)}
                 >
                   <div className="h-12 w-12 rounded-full bg-primary"></div>
@@ -46,8 +46,10 @@ export const ConversationSidebar = ({ conversations }: Props) => {
                         ? `${conversation.recipient.firstName} ${conversation.recipient.lastName}`
                         : `${conversation.creator.firstName} ${conversation.creator.lastName}`}
                     </div>
-                    <div className="text-sm text-gray-700">
-                      Last sent message
+                    <div className="text-xs text-gray-700">
+                      {conversation.lastMessageSent
+                        ? conversation.lastMessageSent.content
+                        : ``}
                     </div>
                   </div>
                 </div>

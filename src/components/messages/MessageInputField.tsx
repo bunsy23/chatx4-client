@@ -4,8 +4,6 @@ import { postNewMessage } from "../../utils/api";
 import { MessageContentParam } from "../../utils/types";
 
 type MessageInputFieldProps = {
-  // message: string;
-  // setMessage: Dispatch<SetStateAction<string>>;
   conversationId: string | undefined;
 };
 
@@ -50,6 +48,7 @@ export const MessageInputField = ({
           name="content"
           type="text"
           placeholder="Type something..."
+          autoComplete="off"
           className="mx-2 h-full w-full p-2 outline-none"
         />
         <button
