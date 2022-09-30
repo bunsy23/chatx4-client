@@ -1,22 +1,37 @@
-import { ConversationType } from "../utils/types";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { ConversationType, CreateConversationParams } from "../utils/types";
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { getConversations } from "../utils/api";
+import { getConversations, postNewConversation } from "../utils/api";
+import axios from "axios";
+import { RootState } from ".";
 
 export interface ConversationsState {
+  // currentConversationId: number | null;
   conversations: ConversationType[];
   loading: boolean;
 }
 
 const initialState: ConversationsState = {
+  // currentConversationId: null,
   conversations: [],
   loading: false,
 };
 
 export const fetchConversationsThunk = createAsyncThunk(
-  "conversations/fetchConversations",
+  "conversations/fetchConversationsThunk",
   async () => {
     return getConversations();
+  }
+);
+
+export const createConversationThunk = createAsyncThunk(
+  "conversations/createConversationThunk",
+  async (data: CreateConversationParams) => {
+    return postNewConversation(data);
   }
 );
 
@@ -24,6 +39,9 @@ export const conversationsSlice = createSlice({
   name: "conversations",
   initialState,
   reducers: {
+    // setCurrentConversationId: (state, action: PayloadAction<number>) => {
+    //   state.currentConversationId = action.payload;
+    // },
     addConversation: (state, action: PayloadAction<ConversationType>) => {
       console.log("addConversation", { state, action });
       state.conversations.push(action.payload);
@@ -48,11 +66,28 @@ export const conversationsSlice = createSlice({
       })
       .addCase(fetchConversationsThunk.rejected, (state) => {
         state.loading = false;
+      })
+      .addCase(createConversationThunk.fulfilled, (state, action) => {
+        state.conversations.unshift(action.payload.data);
       });
   },
 });
 
-export const { addConversation, updateConversations } =
-  conversationsSlice.actions;
+export const selectConversations = (state: RootState) =>
+  state.conversation.conversations;
+
+export const selectConversationId = (state: RootState, id: number) => id;
+
+export const selectConversationById = createSelector(
+  [selectConversations, selectConversationId],
+  (conversations, conversationId) =>
+    conversations.find((conversation) => conversation.id === conversationId)
+);
+
+export const {
+  addConversation,
+  updateConversations,
+  // setCurrentConversationId,
+} = conversationsSlice.actions;
 
 export default conversationsSlice.reducer;

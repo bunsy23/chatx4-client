@@ -4,7 +4,12 @@ import { IoCloseOutline } from "react-icons/io5";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
-import { addConversation } from "../../store/conversationSlice";
+import {
+  addConversation,
+  createConversationThunk,
+} from "../../store/conversationSlice";
+import { CreateConversationParams } from "../../utils/types";
+import { useNavigate } from "react-router-dom";
 
 type CreateConversationFormProps = {
   setShowModal: Dispatch<React.SetStateAction<boolean>>;
@@ -14,32 +19,24 @@ export const CreateConversationForm = ({
   setShowModal,
 }: CreateConversationFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
-  const createConversationInitialValue = { recipient: "", message: "" };
+  const navigate = useNavigate();
+  const createConversationInitialValue = { email: "", message: "" };
 
   const createConversationValidationSchema = Yup.object({
-    recipient: Yup.string().required("Recipient is required"),
-    message: Yup.string().optional(),
+    email: Yup.string().required("Email is required"),
+    message: Yup.string().required("Message is required"),
   });
 
-  const handleOnSubmit = (data: any) => {
-    dispatch(
-      addConversation({
-        id: 6,
-        createdAt: "",
-        creator: {
-          id: 6,
-          email: "",
-          firstName: "",
-          lastName: "",
-        },
-        recipient: {
-          id: 6,
-          email: "",
-          firstName: "",
-          lastName: "",
-        },
+  const handleOnSubmit = (data: CreateConversationParams) => {
+    dispatch(createConversationThunk(data))
+      .unwrap()
+      .then((response) => {
+        const { id: conversationId } = response.data;
+
+        setShowModal(false);
+        navigate(`/conversations/${conversationId}`);
       })
-    );
+      .catch((err) => console.log({ err }));
   };
 
   const handleCloseButtonClick = () => {
@@ -63,17 +60,17 @@ export const CreateConversationForm = ({
       >
         <Form className="flex flex-col gap-y-2">
           <div className="flex w-full cursor-pointer flex-col rounded-xl border p-2">
-            <label htmlFor="recipient" className="text-sm">
+            <label htmlFor="email" className="text-sm">
               Recipient
             </label>
             <Field
-              id="recipient"
-              name="recipient"
+              id="email"
+              name="email"
               type="text"
               className="rounded-md outline-none"
             />
             <div className="text-xs text-red-500">
-              <ErrorMessage name="recipient" />
+              <ErrorMessage name="email" />
             </div>
           </div>
           <div className="flex w-full cursor-pointer flex-col rounded-xl border p-2">

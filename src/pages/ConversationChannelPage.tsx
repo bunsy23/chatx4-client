@@ -8,7 +8,10 @@ import { SocketContext } from "../utils/context/SocketContext";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 import { fetchMessagesThunk, setMessages } from "../store/messageSlice";
-import { updateConversations } from "../store/conversationSlice";
+import {
+  // setCurrentConversationId,
+  updateConversations,
+} from "../store/conversationSlice";
 
 export const ConversationChannelPage = () => {
   const { id } = useParams();
@@ -18,13 +21,16 @@ export const ConversationChannelPage = () => {
 
   useEffect(() => {
     const conversationId = parseInt(id!);
+    // dispatch(setCurrentConversationId(conversationId));
     dispatch(fetchMessagesThunk(conversationId));
   }, [id]);
 
   useEffect(() => {
     console.log(socket);
 
-    socket.on("connected", () => console.log("Connected"));
+    socket.on("connected", () => {
+      console.log("Connected");
+    });
     socket.on("onMessage", (payload: MessageEventPayload) => {
       console.log({ payload });
       const { conversation, message } = payload;

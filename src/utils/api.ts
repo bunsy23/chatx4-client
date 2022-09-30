@@ -33,6 +33,9 @@ export const getAuthUser = () => api.get("/auth/status");
 export const getConversations = () =>
   api.get<ConversationType[]>("/conversations");
 
+export const postNewConversation = (data: CreateConversationParams) =>
+  api.post<ConversationType>("/conversations", data);
+
 /**
  * API: Message
  */

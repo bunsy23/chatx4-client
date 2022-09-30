@@ -1,3 +1,7 @@
+/**
+ * Types related to User
+ */
+
 export type CreateUserParams = {
   email: string;
   firstName: string;
@@ -17,6 +21,10 @@ export type User = {
   lastName: string;
 };
 
+/**
+ * Types related to Conversation
+ */
+
 export type ConversationType = {
   id: number;
   creator: User;
@@ -24,6 +32,15 @@ export type ConversationType = {
   lastMessageSent?: MessageType;
   createdAt: string;
 };
+
+export type CreateConversationParams = {
+  email: string;
+  message: string;
+};
+
+/**
+ * Types related to Message
+ */
 
 export type MessageType = {
   id: number;

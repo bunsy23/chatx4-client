@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
+import { AppDispatch } from "../store";
+import { fetchConversationsThunk } from "../store/conversationSlice";
 import { useAuth } from "../utils/hooks/useAuth";
 
 export const AuthenticatedRoute = ({
