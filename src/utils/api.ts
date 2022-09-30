@@ -1,41 +1,44 @@
 import {
   ConversationType,
+  CreateConversationParams,
   CreateMessageParams,
   CreateUserParams,
   MessageType,
-  User,
   UserCredentialsParams,
 } from "./types";
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 
-let VITE_API_URL = "";
-if (import.meta.env.MODE == "development") {
-  VITE_API_URL = import.meta.env.VITE_API_URL;
-}
+const api = axios.create({
+  baseURL:
+    import.meta.env.MODE === "development" ? import.meta.env.VITE_API_URL : "",
+  withCredentials: true,
+});
 
-const config: AxiosRequestConfig = {
-  withCredentials: true, // send request to the server with cookies
-};
+/**
+ * API: User
+ */
 
-export const postRegisterUser = (data: CreateUserParams) => {
-  axios.post(`${VITE_API_URL}/auth/register`, data, config);
-};
+export const postRegisterUser = (data: CreateUserParams) =>
+  api.post("/auth/register", data);
 
-export const postLoginUser = (data: UserCredentialsParams) => {
-  return axios.post(`${VITE_API_URL}/auth/login`, data, config);
-};
+export const postLoginUser = (data: UserCredentialsParams) =>
+  api.post("/auth/login", data);
 
-export const getAuthUser = () =>
-  axios.get<User>(`${VITE_API_URL}/auth/status`, config);
+export const getAuthUser = () => api.get("/auth/status");
+
+/**
+ * API: Conversation
+ */
 
 export const getConversations = () =>
-  axios.get<ConversationType[]>(`${VITE_API_URL}/conversations`, config);
+  api.get<ConversationType[]>("/conversations");
+
+/**
+ * API: Message
+ */
 
 export const getConversationMessages = (conversationId: number) =>
-  axios.get<MessageType[]>(
-    `${VITE_API_URL}/messages/${conversationId}`,
-    config
-  );
+  api.get<MessageType[]>(`/messages/${conversationId}`);
 
 export const postNewMessage = (data: CreateMessageParams) =>
-  axios.post(`${VITE_API_URL}/messages`, data, config);
+  api.post("/messages", data);
