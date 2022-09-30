@@ -3,12 +3,13 @@ import * as Yup from "yup";
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { postRegisterUser } from "../../utils/api";
 import { CreateUserParams } from "../../utils/types";
 
 export const RegisterForm = () => {
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const toggleShowPassword = () => {
     setIsPasswordShown(!isPasswordShown);
@@ -33,6 +34,7 @@ export const RegisterForm = () => {
   const handleOnSubmit = async (data: CreateUserParams) => {
     try {
       await postRegisterUser(data);
+      navigate("/login");
     } catch (err) {
       console.log(err);
     }

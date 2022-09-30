@@ -6,17 +6,14 @@ import {
 } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { getConversations, postNewConversation } from "../utils/api";
-import axios from "axios";
 import { RootState } from ".";
 
 export interface ConversationsState {
-  // currentConversationId: number | null;
   conversations: ConversationType[];
   loading: boolean;
 }
 
 const initialState: ConversationsState = {
-  // currentConversationId: null,
   conversations: [],
   loading: false,
 };
@@ -39,9 +36,6 @@ export const conversationsSlice = createSlice({
   name: "conversations",
   initialState,
   reducers: {
-    // setCurrentConversationId: (state, action: PayloadAction<number>) => {
-    //   state.currentConversationId = action.payload;
-    // },
     addConversation: (state, action: PayloadAction<ConversationType>) => {
       console.log("addConversation", { state, action });
       state.conversations.push(action.payload);
@@ -84,10 +78,7 @@ export const selectConversationById = createSelector(
     conversations.find((conversation) => conversation.id === conversationId)
 );
 
-export const {
-  addConversation,
-  updateConversations,
-  // setCurrentConversationId,
-} = conversationsSlice.actions;
+export const { addConversation, updateConversations } =
+  conversationsSlice.actions;
 
 export default conversationsSlice.reducer;
